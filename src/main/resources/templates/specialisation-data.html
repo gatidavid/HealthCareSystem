@@ -1,0 +1,68 @@
+
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
+
+<link rel="stylesheet" th:href="@{/mycss/spec_style.css}" />
+
+</head>
+<body>
+	<div class="container">
+		<div class="card">
+			<div class="card-header text-white text-center bg-header-info">
+				<h2>Specialisation Table Data</h2>
+			</div>
+			<div class="card-body">
+			
+				<a th:href="@{/spec/register}" class="btn btn-outline-dark">Register
+					Specialisation</a>| 
+					<a th:href="@{/spec/excel}" class="btn btn-success">
+					Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+					</a>
+					
+				<table class="table table-sm table-hover">
+					<thead>
+						<tr class="bg-secondary text-white">
+							<th>ID</th>
+							<th>Code</th>
+							<th>Name</th>
+							<th>Note</th>
+							<th>Operations</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="spec:${list}">
+							<td th:text="${spec.id}"></td>
+							<td th:text="${spec.specCode}"></td>
+							<td th:text="${spec.specName}"></td>
+							<td th:text="${spec.specNote}"></td>
+							<td><a th:href="@{/spec/delete(id=${spec.id})}"
+								class="btn btn-outline-danger"> Delete <i
+									class="fa fa-trash-o" aria-hidden="true"></i>
+							</a> | <a th:href="@{/spec/edit(id=${spec.id})}"
+								class="btn btn-outline-info"> Edit <i
+									class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</a></td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+			<div class="card-footer bg-success text-white"
+				th:if="${message!=null}">
+				<span th:text="${message}"> </span>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

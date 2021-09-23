@@ -1,0 +1,88 @@
+
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
+<link  rel="stylesheet" th:href="@{/mycss/spec_style.css}" />
+</head>
+<body>
+	<div class="container">
+
+		<div class="card">
+
+			<div class="card-header text-center text-white bg-header-info">
+				<h3>UPDATE SPECIALISATION</h3>
+			</div>
+
+			<div class="card-body">
+				<form th:action="@{/spec/update}" method="post" th:object="${specialisation}">
+					
+					<div class="form-group row">
+						<label for="id" class="col-4 col-form-label lbl">ID</label>
+						<div class="col-sm-4">
+							<input th:field="*{id}" type="text" readonly class="form-control">
+						</div>
+						<div class="col-4 ">
+							<span id="idError"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label for="specCode" class="col-sm-4 col-form-label lbl">Code</label>
+						<div class="col-sm-4">
+							<input th:field="*{specCode}"  type="text" class="form-control" >
+						</div>
+						<div class="col-sm-4">
+							<span id="specCodeError"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label for="specName" class="col-4 col-form-label lbl">Name</label>
+						<div class="col-4">
+							<input  th:field="*{specName}" type="text" class="form-control"  >
+						</div>
+						<div class="col-4">
+							<span id="specNameError"></span>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label for="specNote" class="col-4 col-form-label lbl">Note</label>
+						<div class="col-sm-4">
+							<textarea th:field="*{specNote}"  class="form-control" ></textarea>
+						</div>
+						<div class="col-4">
+							<span id="specNoteError"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4"></div>
+						<div class="col-8 ">
+							<button  class="btn btn-outline-dark">
+								Update <i class="fa fa-address-book-o" aria-hidden="true"></i>
+							</button>
+						</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="card-footer bg-info text-white" th:if="${message!=null}">
+				<span th:text="${message}"></span>
+			</div>
+
+		</div>
+
+	</div>
+	<script th:src="@{/myjs/validate.js}"></script>
+
+</body>
+</html>

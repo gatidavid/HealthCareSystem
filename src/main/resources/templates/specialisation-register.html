@@ -1,0 +1,107 @@
+
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
+
+<link rel="stylesheet" th:href="@{/mycss/spec_style.css}" />
+</head>
+<body>
+	<div class="container">
+
+		<div class="card">
+
+			<div class="card-header text-center text-white bg-header-info">
+				<h3>REGISTER SPECIALISATION</h3>
+
+			</div>
+
+			<div class="card-body">
+
+				<form th:action="@{/spec/save}" method="post" id="specForm">
+					<div class="form-group row">
+
+						<label for="specCode" class="col-sm-4 col-form-label lbl">Code</label>
+						<div class="col-sm-4">
+							<input 
+							name="specCode" 
+								id="specCode" 
+								type="text" 
+								class="form-control"
+								>
+						</div>
+						<div class="col-sm-4">
+							<span 
+							id="specCodeError">
+							</span>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label for="specName" class="col-sm-4 col-form-label lbl">Name</label>
+						<div class="col-sm-4">
+							<input 
+							type="text" 
+							class="form-control" 
+							id="specName"
+							name="specName" >
+							
+						</div>
+						<div class="col-sm-4">
+							<span 
+							id="specNameError">
+							</span>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<label for="specNote" class="col-sm-4 col-form-label lbl">Note</label>
+						<div class="col-sm-4">
+							<textarea 
+							class="form-control" 
+							id="specNote"
+							name="specNote"
+							>
+							</textarea>
+						</div>
+						<div class="col-sm-4">
+							<span id="specNoteError"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4"></div>
+						<div class="col-8 ">
+							<button 
+							class="btn btn-outline-dark">
+								Create <i class="fa fa-address-book-o" aria-hidden="true"></i>
+							</button>
+							
+							<a th:href="@{/spec/all}" class="btn btn-outline-dark"> View
+								Data</a>
+						</div>
+
+					</div>
+				</form>
+			</div>
+
+			<div class="card-footer bg-success text-white text-center"
+				th:if="${message!=null}">
+				<span th:text="${message}"></span>
+			</div>
+
+		</div>
+
+	</div>
+	<script th:src="@{/myjs/spec_validate.js}">
+		
+	</script>
+
+</body>
+</html>
