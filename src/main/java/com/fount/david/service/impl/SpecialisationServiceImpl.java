@@ -10,7 +10,7 @@ import com.fount.david.exception.SpecialisationNotFoundException;
 import com.fount.david.model.Specialisation;
 import com.fount.david.repo.SpecialisationRepository;
 import com.fount.david.service.ISpecialisationService;
-import com.fount.david.util.MyCollectionUtil;
+import com.fount.david.util.MyCollectionsUtil;
 
 @Service
 public class SpecialisationServiceImpl implements ISpecialisationService {
@@ -59,13 +59,21 @@ public class SpecialisationServiceImpl implements ISpecialisationService {
 		return repo.getSpecNameCount(specName) > 0;
 
 	}
+	
+	@Override
+	public boolean isSpecNameExistForEdit(String specName, Long id) {
+		
+		return repo.getSpecCodeCountForEdit(specName, id) >0;
+	}
 
 	@Override
 	public Map<Long, String> getSpecIdAndName() {
 		
 		List<Object[]> list = repo.getSpecIdAndName();
-		Map<Long, String> map= MyCollectionUtil.convertToMap(list);
+		Map<Long, String> map= MyCollectionsUtil.convertToMap(list);
 		return map;
 	}
+
+	
 
 }

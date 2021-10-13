@@ -1,20 +1,9 @@
 
 <html xmlns:th="https://www.thymeleaf.org/">
-<head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
-
-<link rel="stylesheet" th:href="@{/mycss/spec_style.css}" />
-
-</head>
+ <div th:replace="fragments/common-ui :: header"></div>
 <body>
+	<div th:replace="fragments/common-ui :: menu"></div>
+	
 	<div class="container">
 		<div class="card">
 			<div class="card-header text-white text-center bg-header-info">
@@ -31,8 +20,10 @@
 				<table class="table table-sm table-hover">
 					<thead>
 						<tr class="bg-secondary text-white">
+							<th></th>
 							<th>NAME</th>
 							<th>EMAIL</th>
+							<th>SPECIALISATION</th>
 							<th>MOBILE</th>
 							<th>NOTE</th>
 							<th>ADDRESS</th>
@@ -41,8 +32,12 @@
 					</thead>
 					<tbody>
 						<tr th:each="doc:${list}">
+							<td>
+								<img th:src="${doc.photoLoc}" width="50" height="50">
+							</td>
 							<td> [[${doc.firstName + ' ' +doc.lastName}]]</td>
 							<td th:text="${doc.email}"></td>
+							<td th:text="${doc.specialisation.specName}"></td>
 							<td th:text="${doc.mobile}"></td>
 							<td th:text="${doc.note}"></td>
 							<td th:text="${doc.address}"></td>

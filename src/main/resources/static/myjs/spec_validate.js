@@ -32,6 +32,7 @@ $(document)
 							specCodeError = false;
 							
 						} else {
+							
 							var id = 0;
 							if($("#id").val()!=undefined){
 								specCodeError = true;
@@ -80,10 +81,15 @@ $(document)
 							
 							specNameError = false;
 						} else {
-							
+								var id =0;
+								
+								if($("#id").val()!=undefined){
+									specNameError = true;
+									id =$("#id").val();
+								}
 							$.ajax({
 								url:"checkName",
-								data:{"name": val},
+								data:{"name": val, "id": id},
 								success:function(resp){
 									if(resp !=''){
 										$("#specNameError").show()
@@ -94,8 +100,7 @@ $(document)
 									}
 								}
 							});
-							
-							
+		
 							$("#specNameError").hide()
 							specNameError = true
 						}

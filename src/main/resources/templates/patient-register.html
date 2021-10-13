@@ -1,0 +1,245 @@
+
+<html xmlns:th="https://www.thymeleaf.org/">
+	<div th:replace="fragments/common-ui :: header"></div>
+<body>
+	<div th:replace="fragments/common-ui :: menu"></div>
+	
+    <div class="container">
+
+        <div class="card">
+
+            <div class="card-header text-center text-white bg-header-info">
+                <h3>PATIENT REGISTER PAGE</h3>
+            </div>
+            <div class="card-body">
+               <form th:action="@{/patient/save}" method="post">
+              
+                <!--row firstname-->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="firstName">First name</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" name="firstName" id="firstName" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="firstNameError"></span>
+                    </div>
+                </div>
+
+                 <!--row last name-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="lastName">Last Name</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" name="lastName" id="lastName" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="lastNameError"></span>
+                    </div>
+                </div>
+                
+                  <!--Gender -->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="gender">Gender</label>
+                    </div>
+                    <div class="col-4">
+                        
+                         <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender1" value="Male">
+                            <label class="form-check-label">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender1" value="Female">
+                            <label class="form-check-label" >Female</label>
+                          </div>
+                    </div>
+                    <div class="col-6">
+                        <span id="genderError"></span>
+                    </div>
+                </div>
+                
+                 <!--row mobile-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="mobile">Phone</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" name="mobile" id="mobile" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="mobileError"></span>
+                    </div>
+                </div>
+                
+                 <!--row email-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="text" name="email" id="email" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="emailError"></span>
+                    </div>
+                </div>
+                
+                <!--row Date of Birth-->
+                <div class="row">
+                   <div class="col-2">
+                       <label for="dateOfBirth">Date of Birth</label>
+                   </div>
+                   <div class="col-4">
+                       <input type="date" name="dateOfBirth" id="dateOfBirth" class="form-control">
+                   </div>
+                   <div class="col-6">
+                       <span id="dateOfBirthError"></span>
+                   </div>
+               </div>
+
+                <!--row Marital Status-->
+                <div class="row">
+                    <div class="col-2">
+                        <label for="maritalStatus">Marital Status</label>
+                    </div>
+                    <div class="col-4">
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="maritalStatus" id="maritalStatus1" value="Married">
+                            <label class="form-check-label" for="maritalStatus">Married</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="maritalStatus" id="maritalStatus2" value="Single">
+                            <label class="form-check-label" for="maritalStatus">Single</label>
+                          </div>
+                         <br>
+                     <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="maritalStatus" id="maritalStatus3" value="Divorce">
+                            <label class="form-check-label" for="maritalStatus">Divorce</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="maritalStatus" id="pMaritalStatus4" value="Separated">
+                            <label class="form-check-label" for="maritalStatus">Separated</label>
+                          </div>
+                    
+                    </div>
+                    <div class="col-6">
+                        <span id="maritalStatusError"></span>
+                    </div>
+                </div>
+
+                 <!--row 6 Present Address-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="presentAddr">Present Address</label>
+                    </div>
+                    <div class="col-4">
+                        <textarea name="presentAddr" id="presentAddr" class="form-control"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <span id="presentAddrError"></span>
+                    </div>
+                </div>
+
+                 <!--row Communication Address-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="commAddr">Communication Address</label>
+                    </div>
+                    <div class="col-4">
+                        <textarea name="commAddr" id="commAddr" class="form-control"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <span id="commAddrError"></span>
+                    </div>
+                </div>
+
+                 <!--row Past Medical History-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="pastMedicalHistory">Past Medical History</label>
+                    </div>
+                    <div class="col-4">
+           
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory1" 
+                        name="pastMedicalHistory" value="Anaemia">
+                        <label class="form-check-label" for="pastMedicalHistory">Anaemia</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory2" 
+                        name="pastMedicalHistory" value="Asthma">
+                        <label class="form-check-label" for="pastMedicalHistory">Asthma</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory3" 
+                        name="pastMedicalHistory" value="Diabetes">
+                        <label class="form-check-label" for="pastMedicalHistory">Diabetes</label>
+                      </div>
+                      <br>
+
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory4" 
+                        name="pastMedicalHistory" value="Cancer">
+                        <label class="form-check-label" for="pastMedicalHistory">Cancer</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory5" 
+                        name="pPastMedicalHistory" value="Ulcer">
+                        <label class="form-check-label" for="pastMedicalHistory">Ulcer</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="pastMedicalHistory6" 
+                        name="pastMedicalHistory" value="Chicken pox">
+                        <label class="form-check-label" for="pastMedicalHistory">Chicken pox</label>
+                      </div>
+                      <br>
+                    </div>
+                    
+                    <div class="col-6">
+                        <span id="pastMedicalHistoryError"></span>
+                    </div>
+                </div>
+
+                 <!--row Other Details-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="ifOther">Other Details</label>&nbsp;&nbsp;
+                        <input type="checkbox"  id="ifOther" >
+                    </div>
+                    <div class="col-4">
+                        <input type="text" name="ifOther" id="ifOther" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <span id="ifOtherError"></span>
+                    </div>
+                </div>
+
+				   <!--row Note10-->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="note">Note</label>
+                    </div>
+                    <div class="col-4">
+                        <textarea name="note" id="note" class="form-control"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <span id="noteError"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success">Register 
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </button>
+                </form>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

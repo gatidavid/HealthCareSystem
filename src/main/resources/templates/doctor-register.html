@@ -1,19 +1,11 @@
 
 <html xmlns:th="https://www.thymeleaf.org/">
-<head>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
+	
+	<div th:replace="fragments/common-ui :: header"></div>
 
-<link rel="stylesheet" th:href="@{/mycss/spec_style.css}" />
-</head>
 <body>
+   <div th:replace="fragments/common-ui :: menu"></div>
+   
 	<div class="container">
 
         <div class="card">
@@ -23,6 +15,20 @@
             <div class="card-body">
 
                 <form th:action="@{/doctor/save}" method="POST">
+                  <!-- row#0 -->
+                 <div class="row">
+                    <div class="col-2">
+                        <label for="photoLoc">Image</label>
+                    </div>
+                    <div class="col-4">
+                        <input type="file" name="fileOb" id="fileOb" class="form-control" onchange="uploadFile()"/>
+                        <input type="hidden" id="photoLoc" name="photoLoc"/>
+                    </div>
+                    <div class="col-6">
+                        <span id="photoLocError"></span>
+                    </div>
+                </div>
+                  
                    <!--row #1-->
                    <div class="row">
                     <div class="col-2">
@@ -67,7 +73,7 @@
 				<div class="col-2">
 				<label for="specialisaton">Specialisation</label>
 				</div>
-				<div class="col-4 form-control" >
+				<div class="col-4" >
 					<select name="specialisation.id" id="specialisation" class="form-control">
 						<option value="">--SELECT--</option>
 						<option th:each="spec:${specialisations}" th:value="${spec.key}" th:text="${spec.value}"></option>
@@ -141,5 +147,6 @@
         </div>
     </div>
 
+	 <script th:src="@{/myjs/uploadImgBb.js}"></script>
 </body>
 </html>

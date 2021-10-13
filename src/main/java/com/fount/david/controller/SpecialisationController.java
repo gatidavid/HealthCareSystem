@@ -51,7 +51,7 @@ public class SpecialisationController {
 			Long id = service.saveSpecialisation(spec);
 			String message = "Specialisation '"+id+"'  Details Save!";
 			model.addAttribute("message", message);
-		} catch (Exception e) {
+		} catch (SpecialisationNotFoundException e) {
 			model.addAttribute("message", "Unable To Save Specialisation Details");
 			e.printStackTrace();
 		}
@@ -153,7 +153,7 @@ public class SpecialisationController {
 		
 		String message ="";
 		
-		if(id != 0 && service.isSpecCodeExist(code)) {//register check
+		if(id == 0 && service.isSpecCodeExist(code)) {//register check
 			message = code +", already exist";
 		}else if(id !=0 && service.isSpecCodeExistForExist(code, id)) {//edit check
 			message = code + ", already exist";
@@ -163,13 +163,15 @@ public class SpecialisationController {
 	
 	
 	@GetMapping("/checkName")
-	public @ResponseBody String validateSpecName(@RequestParam String name) {
+	public @ResponseBody String validateSpecName(@RequestParam String name,
+												 @RequestParam Long id) {
 		
 		String message ="";
 		
-		if(service.isSpecNameExist(name)) {
+		if(id==0 && service.isSpecNameExist(name)) {
 			message = name +", already exist";
-		}
+		}else if(id !=0 && service.isSpecNameExistForEdit(name, id));
+		
 		return message;
 	}
 	

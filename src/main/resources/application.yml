@@ -1,5 +1,11 @@
 server:
   port: 2021
+
+master:
+  user:
+    name: Admin
+    email: admin@gmail.com
+    
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,5 +15,17 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
+    
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: javasamplemail@gmail.com  
+    password: Sbg7nmail
+    properties:
+      mail:
+        smtp:
+         starttls:
+          enable: true
+    

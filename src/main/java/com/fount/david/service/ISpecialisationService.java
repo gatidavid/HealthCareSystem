@@ -15,7 +15,7 @@ public interface ISpecialisationService {
 	
 	public Specialisation getOneSpecialisation(Long id);
 	
-	void updateSpecialisation(Specialisation spec);
+	public void updateSpecialisation(Specialisation spec);
 	
 	
 	public boolean isSpecCodeExist(String specCode);
@@ -23,6 +23,8 @@ public interface ISpecialisationService {
 	public boolean isSpecCodeExistForExist(String specCode, Long id);
 	
 	public boolean isSpecNameExist(String specName);
+	
+	public boolean isSpecNameExistForEdit(String specName, Long id);
 
 	Map<Long, String> getSpecIdAndName();
 

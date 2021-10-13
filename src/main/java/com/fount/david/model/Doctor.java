@@ -49,7 +49,9 @@ public class Doctor {
 	
 	@Column(name="doc_note_col")
 	private String note;
-	
+
+	@Column(name="doc_img_col")
+	private String photoLoc;
 	
 	
 	

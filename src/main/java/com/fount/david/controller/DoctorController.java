@@ -3,6 +3,7 @@ package com.fount.david.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.fount.david.exception.DoctorNotFoundException;
 import com.fount.david.model.Doctor;
 import com.fount.david.service.IDoctorService;
 import com.fount.david.service.ISpecialisationService;
+import com.fount.david.util.MyMailUtil;
 
 @Controller
 @RequestMapping("/doctor")
@@ -25,37 +27,78 @@ public class DoctorController {
 	private IDoctorService service;
 	
 	@Autowired
+	private MyMailUtil mailUtil;
+	
+	
+	@Autowired
 	private ISpecialisationService specialisationService;
 	
+	/*Send specialisation id and name 
+	to ui to populate dynamic 
+	dropdown for doctor specialisation
+	*/
 	private void createDynamicUI(Model model) {
 		model.addAttribute("specialisations", specialisationService.getSpecIdAndName());
 	}
 	
-	
+	/*  
+	 * Show Register page
+	 * */
 	@GetMapping("/register")
 	public String displayRegForm(@RequestParam(value="message", required = false) String message,
 								  Model model) {
 		
+		model.addAttribute("message", message);
 		createDynamicUI(model);
 		
 		return "doctor-register";
 	}
+	
+	/*  
+	 * Save on submit 
+	 * 
+	 * */
 	@PostMapping("/save")
-	public String saveDoctor(@ModelAttribute Doctor doc, Model model) {
+	public String saveDoctor(@ModelAttribute Doctor doc, 
+							Model model,
+							RedirectAttributes attributes) {
 		
 		try {
 			
 			Long id = service.saveDoctor(doc);
-			String message ="Doctor record with '"+id+"' saved";
+			String message ="Doctor record with '"+id+"' created";
+			attributes.addAttribute("message", message);
+			
+			if(id!=null) {
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						mailUtil.send(
+								doc.getEmail(), 
+								"SUCCESS",
+								message,
+								new ClassPathResource("/static/myres/mongocheatsheat.pdf"));
+					}
+					
+				}).start();
+			}
 			model.addAttribute("message", message);
 			
 			
 		} catch (DoctorNotFoundException e) {
 			model.addAttribute("message","Unable to Save Doctor Record");
 			e.printStackTrace();
+		} catch (Exception e) {
+			model.addAttribute("message","Unable to Save Doctor Record");
+			e.printStackTrace();
 		}
-		return "doctor-register";
+		return "redirect:register";
 	}
+	
+	/*
+	 * Display Register Data 
+	 * */
 	@GetMapping("/all")
 	public String viewAddDoctorData(Model model, @RequestParam(value="message",
 									required=false) String message) {
@@ -70,6 +113,9 @@ public class DoctorController {
 		}
 		return "doctor-data";
 	}
+	/*
+	 * Delete by id
+	 * */
 	
 	@GetMapping("/delete")
 	public String removeDoctorData(@RequestParam Long id, 
@@ -84,6 +130,9 @@ public class DoctorController {
 		return "redirect:all";
 	}
 	
+	/*
+	 * Show Doctor edit page if it exist else for doctor data
+	 * */
 	@GetMapping("/edit")
 	public String doDoctorEdit(@RequestParam Long id, Model model,
 									RedirectAttributes attributes) {
@@ -92,6 +141,7 @@ public class DoctorController {
 		try {
 			Doctor doc = service.getOneDoctor(id);
 			model.addAttribute("doctor", doc);
+			createDynamicUI(model);
 			page="doctor-edit";
 		} catch (DoctorNotFoundException e) {
 			attributes.addAttribute("message", "Chosen Doctor record does not exist");
@@ -102,6 +152,9 @@ public class DoctorController {
 		return page;
 	}
 	
+	/*
+	 * Do update
+	 * */
 	@PostMapping("/update")
 	public String doDoctorUpdate(@ModelAttribute Doctor doc, Model model) {
 		
