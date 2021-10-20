@@ -45,8 +45,8 @@ public class MyMailUtil {
 		
 			
 			if (files != null) {
-				for(Resource res: files) {
-					helper.addAttachment(res.getFilename(), res);
+				for(Resource fileResource: files) {
+					helper.addAttachment(fileResource.getFilename(), fileResource);
 				}
 			}
 			
@@ -58,12 +58,16 @@ public class MyMailUtil {
 			e.printStackTrace();
 			sent= false;
 		}
+		
 		return sent;
 	}
 	
 	//Overloaded methods
 	
-	public boolean send(String to, String subject, String text, Resource file) {
+	public boolean send(String to, 
+						String subject,
+						String text, 
+						Resource file) {
 		
 		return send(
 				new String[] {to},
@@ -77,7 +81,7 @@ public class MyMailUtil {
 			String subject,
 			String text) {
 		
-		return send(to, subject, text);
+		return send(to, subject, text, null);
 	}
 
 	}

@@ -18,4 +18,6 @@ public interface IDoctorService {
 	public void updateDoctor(Doctor doc);
 	
 	Map<Long, String> getDoctorIdAndNames();
+
+	
 }

@@ -13,5 +13,6 @@ public class UserUtil {
 				.toString()
 				.replace("-", "")
 				.substring(0, 8);
+		
 	}
 }

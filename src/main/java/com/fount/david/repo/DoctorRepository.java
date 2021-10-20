@@ -12,4 +12,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
 	
 	@Query("SELECT id, firstName, lastName FROM Doctor")
 	List<Object[]> getDoctorIdAndNames();
+	
+	
 }

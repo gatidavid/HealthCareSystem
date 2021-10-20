@@ -12,6 +12,7 @@ import com.fount.david.model.User;
 import com.fount.david.repo.PatientRepository;
 import com.fount.david.service.IPatientService;
 import com.fount.david.service.IUserService;
+import com.fount.david.util.MyMailUtil;
 import com.fount.david.util.UserUtil;
 
 @Service
@@ -21,24 +22,46 @@ public class PatientServiceImpl implements IPatientService {
 	private PatientRepository repo;
 
 	@Autowired
-	private UserUtil util;
+	private UserUtil userUtil;
+	
+	@Autowired
+	private MyMailUtil mailUtil; 
 
 	@Autowired
 	private IUserService userService;
 
 	@Override
 	public Long savePatient(Patient patient) {
+		
 		Long id = repo.save(patient).getId();
 
-		if (id != null) {
+		if (id!=null) {
+			
+			String pwd = userUtil.generatePassword();
+			
 			User user = new User();
 			user.setDisplayName(patient.getFirstName() + " " + patient.getLastName());
 			user.setUsername(patient.getEmail());
-			user.setPassword(util.generatePassword());
+			user.setPassword(pwd);
 			user.setRole(UserRoles.PATIENT.name());
-			userService.saveUser(user);
-
-			// TODO : Email part pending
+			
+			Long generatedId =userService.saveUser(user);
+			if(generatedId!=null) {
+				
+				new Thread(
+						new Runnable() {
+							
+							@Override
+							public void run() {
+								String text = "Your name is "+patient.getEmail()+", password is "+pwd;
+											
+								 mailUtil.send(patient.getEmail(), 
+											  "PATIENT ADDED", 
+											  text);
+							}
+						}
+						).start();
+			}
 		}
 		return id;
 	}

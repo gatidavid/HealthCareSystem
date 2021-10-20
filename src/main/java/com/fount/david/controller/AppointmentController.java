@@ -26,6 +26,7 @@ public class AppointmentController {
 	@Autowired
 	private IDoctorService doctorService;
 	
+	
 	private void crateDynamicUI(Model model) {
 		
 		model.addAttribute("doctors", doctorService.getDoctorIdAndNames());
@@ -119,4 +120,6 @@ public class AppointmentController {
 		}
 		return "redirect:all";
 	}
+	
+
 }

@@ -1,5 +1,6 @@
 
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+ xmlns:sec="https://www.thymeleaf.org/extras/spring-security5">
 
 
 <head th:fragment="header">
@@ -50,7 +51,7 @@
        <!-- Specialisation End --> 
       
      <!-- Doctor Start --> 
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" >
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Doctor
         </a>
@@ -88,8 +89,17 @@
         </div>
       </li>
        <!-- Appointment End -->
+      
+       <li class="nav-item">
+       	<a class="nav-link" th:href="@{/logout}" 
+       		sec:authorize="isAuthenticated()">
+       		
+       		Logout(<span sec:authentication="name"></span>)
+       		</a>)
+       		
+       </li>
     </ul>
-  
+    
   </div>
 </nav>
 

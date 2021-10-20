@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.fount.david.constants.UserRoles;
 import com.fount.david.model.User;
 import com.fount.david.service.IUserService;
+import com.fount.david.util.MyMailUtil;
 import com.fount.david.util.UserUtil;
 
 @Component
@@ -20,6 +21,10 @@ public class MasterAccountSetupRunner implements CommandLineRunner {
 	private String username;
 	
 	@Autowired
+	private MyMailUtil mailUtil;
+	
+	
+	@Autowired
 	private IUserService userService;
 	
 	@Autowired
@@ -30,14 +35,32 @@ public class MasterAccountSetupRunner implements CommandLineRunner {
 		
 		if(!userService.findByUsername(username).isPresent()) {
 			
+			String pwd = userUtil.generatePassword();
+	
 			User user = new User();
 			user.setDisplayName(displayName);
 			user.setUsername(username);
-			user.setPassword(userUtil.generatePassword());
+			user.setPassword(pwd);
 			user.setRole(UserRoles.ADMIN.name());
-			userService.saveUser(user);
 
-			// TODO : Email part pending
+			Long generatedId =userService.saveUser(user);
+			
+			if(generatedId != null) {
+				
+				new Thread(
+						new Runnable() {
+							
+							@Override
+							public void run() {
+								String text = "Your name is "+username+
+										", password is "+pwd;
+								mailUtil.send(username, 
+											  "Admin Account Created ",
+											   text);
+							}
+						}
+						).start();
+			}
 		}
 
 	}
