@@ -20,7 +20,7 @@ import com.fount.david.service.IDoctorService;
 @Controller
 @RequestMapping("/appointment")
 public class AppointmentController {
-    	                      
+    	                        
 	@Autowired      
 	private IAppointmentService service;
 	@Autowired
