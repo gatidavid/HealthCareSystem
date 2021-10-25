@@ -37,7 +37,7 @@ public class AppointmentController {
 		model.addAttribute("message", message);
 		crateDynamicUI(model);
 		return "appointment-register";
-	}	      
+	}	         
 	
 	@PostMapping("/save")
 	public String doSaveAppointment(@ModelAttribute Appointment appointment,
