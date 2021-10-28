@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fount.david.exception.PatientNotFoundException;
 import com.fount.david.model.Patient;
@@ -47,11 +48,13 @@ public class PatientController {
 	}
 	
 	@GetMapping("/all")
-	public String displayPatients(Model model ){
+	public String displayPatients(Model model, 
+						@RequestParam(value ="message", required=false) String message){
 	
 		try {
 			List<Patient> list = service.getAllPatient();
 			model.addAttribute("list", list);
+			model.addAttribute("message", message);
 		} catch (PatientNotFoundException e) {
 			e.printStackTrace();
 			model.addAttribute("message", "No Records Available");
@@ -63,8 +66,9 @@ public class PatientController {
 	public String deletePatient(@RequestParam Long id, Model model) {
 		
 		try {
-			String message ="Patient ('"+id+"' Deleted)";
+		
 			service.removePatient(id);
+			String message ="Patient ('"+id+"' Deleted)";
 			model.addAttribute("message", message);
 			
 			
@@ -76,7 +80,8 @@ public class PatientController {
 	}
 	
 	@GetMapping("/edit")
-	public String editPatient(@RequestParam Long id, Model model) {
+	public String editPatient(@RequestParam Long id, Model model,
+								RedirectAttributes attributes) {
 		
 		String page = null;
 		
@@ -84,28 +89,31 @@ public class PatientController {
 			
 			Patient patient = service.getOnePatient(id);
 			model.addAttribute("patient", patient);
+			
 			page = "patient-edit";
+			
 		} catch (PatientNotFoundException e) {
 			 e.printStackTrace();
-			 model.addAttribute("message", "Unable to Retrieve Patient Record for Edit");
+			 attributes.addAttribute("message", "Unable to Retrieve Patient Record for Edit");
 			 page="redirect:all";
 		}
 		return page;
 	}
 	
 	@PostMapping("/update")
-	public String doPatientUpdate(@ModelAttribute Patient patient, Model model) {
+	public String doPatientUpdate(@ModelAttribute Patient patient,
+			RedirectAttributes attributes) {
 		
 		try {
 			
 			service.updatePatient(patient);
 			String message = "Patient ('"+patient.getId()+"') Updated";
-			model.addAttribute("message", message);
+			attributes.addAttribute("message", message);
 			
-			//TODO: Update malfunctioning(it rather save as new record)
+			
 		} catch (PatientNotFoundException e) {
 			e.printStackTrace();
-			model.addAttribute("message", "Unable to Update Patient Record");
+			attributes.addAttribute("message", "Unable to Update Patient Record");
 		}
 		return "redirect:all";
 	}

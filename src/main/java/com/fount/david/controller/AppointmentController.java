@@ -1,6 +1,7 @@
 package com.fount.david.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,23 +15,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fount.david.exception.AppointMentNotFoundException;
 import com.fount.david.model.Appointment;
+import com.fount.david.model.Doctor;
 import com.fount.david.service.IAppointmentService;
 import com.fount.david.service.IDoctorService;
+import com.fount.david.service.ISpecialisationService;
 
 @Controller
 @RequestMapping("/appointment")
 public class AppointmentController {
-    	                        
+    	                          
 	@Autowired      
 	private IAppointmentService service;
 	@Autowired
 	private IDoctorService doctorService;
+	
+	@Autowired
+	private ISpecialisationService specialisationService;
 	
 	
 	private void crateDynamicUI(Model model) {
 		
 		model.addAttribute("doctors", doctorService.getDoctorIdAndNames());
 	}
+	
 	@GetMapping("/register")
 	public String showAppointment(@RequestParam( value="message", required=false)String message, 
 									Model model){
@@ -121,5 +128,45 @@ public class AppointmentController {
 		return "redirect:all";
 	}
 	
+	//.. view appointments page..
+		@GetMapping("/view")
+		public String viewSlots(
+				@RequestParam(required = false, defaultValue = "0") Long specId,
+				Model model) {
+				
+			//fetch data for Spec DropDown
+			Map<Long,String> specMap =  specialisationService.getSpecIdAndName();
+			model.addAttribute("specialisations", specMap);
+			
+			List<Doctor> docList =  null;
+			String message = null;
+			if(specId<=0) { //if they did not select any spec
+				 docList = doctorService.getAllDoctors();
+				 message = "Result : All Doctors";
+			} else {
+				 docList = doctorService.findDoctorBySpecName(specId);
+				 message = "Result : "+specialisationService.getOneSpecialisation(specId).getSpecName()+" Doctors";
+			}
+			model.addAttribute("docList", docList);
+			
+			model.addAttribute("message", message);
+			
+			return "appointment-search";
+		}
 
+		//.. view slots...
+		@GetMapping("/viewSlot")
+		public String showSlots(
+				@RequestParam Long id,
+				Model model
+				) 
+		{
+			//fetch apps based on doctor id
+			List<Object[]> list = service.getAppoinmentsByDoctor(id);
+			model.addAttribute("list", list);
+			Doctor doc = doctorService.getOneDoctor(id);
+			model.addAttribute("message", "RESULTS SHOWING FOR : " + doc.getFirstName()+" "+doc.getLastName());
+			
+			return "appointment-slots";
+		}
 }

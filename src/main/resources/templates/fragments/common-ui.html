@@ -11,6 +11,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" ></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css" />
 
@@ -38,20 +40,19 @@
       </li>
       
      <!-- Specialisation Start --> 
-      <li class="nav-item dropdown">
+     <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMIN')" >
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Specialisation
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" th:href="@{/spec/register}">Add</a>
           <a class="dropdown-item" th:href="@{/spec/all}">View All </a>
-         
         </div>
       </li>
        <!-- Specialisation End --> 
       
      <!-- Doctor Start --> 
-      <li class="nav-item dropdown" >
+       <li class="nav-item dropdown" sec:authorize="hasAuthority('ADMIN')">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Doctor
         </a>
@@ -69,33 +70,30 @@
          	Patient
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" th:href="@{/patient/register}">Add</a>
-          <a class="dropdown-item" th:href="@{/patient/all}">View All </a>
-         
+          <a class="dropdown-item" th:href="@{/patient/register}" sec:authorize="isAnonymous()">Add</a>
+          <a class="dropdown-item" th:href="@{/patient/all}" sec:authorize="hasAuthority('ADMIN')">View All</a>
+          <a class="dropdown-item" th:href="@{/patient/all}" sec:authorize="hasAuthority('PATIENT')">My Profile</a>
         </div>
       </li>
        <!-- Patient End --> 
        
         <!-- Appointment Start --> 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         	Appointment
+      <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Appointment
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" th:href="@{/appointment/register}">Add</a>
-          <a class="dropdown-item" th:href="@{/appointment/all}">View All </a>
-         
+          <a class="dropdown-item" th:href="@{/appointment/register}" sec:authorize="hasAuthority('ADMIN')">Add</a>
+          <a class="dropdown-item" th:href="@{/appointment/all}" sec:authorize="hasAuthority('ADMIN')">View All</a>
+          <a class="dropdown-item" th:href="@{/appointment/view}" sec:authorize="hasAuthority('PATIENT')">Book</a>
         </div>
       </li>
        <!-- Appointment End -->
       
        <li class="nav-item">
-       	<a class="nav-link" th:href="@{/logout}" 
-       		sec:authorize="isAuthenticated()">
-       		
-       		Logout(<span sec:authentication="name"></span>)
-       		</a>)
+       <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()" >
+        Logout ( <span th:text="${session.userOb.displayName}"></span>  <span sec:authentication="principal.authorities"></span>)
+        </a>
        		
        </li>
     </ul>

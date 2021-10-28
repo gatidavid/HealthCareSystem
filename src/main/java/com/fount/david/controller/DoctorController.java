@@ -169,6 +169,8 @@ public class DoctorController {
 		return "redirect:all";
 	}
 	
+	//TODO: email and mobile duplicate validations (AJAX)
 	
+	//TODO: excel export
 
 }

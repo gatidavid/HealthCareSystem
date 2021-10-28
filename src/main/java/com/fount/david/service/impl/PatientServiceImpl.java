@@ -20,6 +20,9 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Autowired
 	private PatientRepository repo;
+	
+	@Autowired
+	private IUserService userService;
 
 	@Autowired
 	private UserUtil userUtil;
@@ -27,8 +30,7 @@ public class PatientServiceImpl implements IPatientService {
 	@Autowired
 	private MyMailUtil mailUtil; 
 
-	@Autowired
-	private IUserService userService;
+	
 
 	@Override
 	public Long savePatient(Patient patient) {

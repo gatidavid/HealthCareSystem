@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fount.david.constants.UserRoles;
 
@@ -30,21 +31,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		  http.authorizeRequests()
-		  
-		  .antMatchers("/patient/register", "/patient/save").permitAll()
-		  .antMatchers("/patient/all").hasAuthority(UserRoles.ADMIN.name())
-		  .antMatchers("/doctor/**").hasAuthority(UserRoles.ADMIN.name())
-		  //.antMatchers("/spec/**").hasAuthority(UserRoles.ADMIN.name())
-		  
-		  .anyRequest().authenticated()
-		  
-		  .and() 
-		  .formLogin() 
-		  .defaultSuccessUrl("/spec/all", true)
-		  
-		  .and() 
-		  .logout();
+		http.authorizeRequests()
+		.antMatchers("/patient/register","/patient/save").permitAll()
+		.antMatchers("/spec/**").hasAuthority(UserRoles.ADMIN.name())
+		.antMatchers("/doctor/**").hasAuthority(UserRoles.ADMIN.name())
+		.antMatchers("/appointment/register","/appointment/save","/appointment/all").hasAuthority(UserRoles.ADMIN.name())
+		.antMatchers("/appointment/view","/appointment/viewSlot").hasAuthority(UserRoles.PATIENT.name())
+		.antMatchers("/user/login","/login").permitAll()
+		
+		.anyRequest().authenticated()
+		
+		.and()
+		.formLogin()
+		.loginPage("/user/login") //show Login Page
+		.loginProcessingUrl("/login") //POST (do login)
+		.defaultSuccessUrl("/user/setup",true)
+		.failureUrl("/user/login?error=true") //If login is failed
+		
+		.and()
+		.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //URL for Logout
+		.logoutSuccessUrl("/user/login?logout=true") // On logout success
+		;
 		 
 	}
 }
