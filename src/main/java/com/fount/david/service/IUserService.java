@@ -9,4 +9,6 @@ public interface IUserService {
 	public Long saveUser(User user);
 	
 	Optional<User> findByUsername(String username);
+	
+	void updateUserPwd(String encPwd, Long userId); 
 }

@@ -52,7 +52,7 @@ public class PatientController {
 						@RequestParam(value ="message", required=false) String message){
 	
 		try {
-			List<Patient> list = service.getAllPatient();
+			List<Patient> list = service.getAllPatients();
 			model.addAttribute("list", list);
 			model.addAttribute("message", message);
 		} catch (PatientNotFoundException e) {

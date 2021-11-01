@@ -7,16 +7,10 @@
 	<div class="container">
 		<div class="card">
 			<div class="card-header text-white text-center bg-header-info">
-				<h2>DOCTOR TABLE DATA</h2>
+				<h2>DOCTOR DATA</h2>
 			</div>
 			<div class="card-body">
-			
-				<a th:href="@{/doctor/register}" class="btn btn-outline-dark">Register
-					Doctor</a>| 
-					<a th:href="@{/doctor/excel}" class="btn btn-success">
-					Excel <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-					</a>
-					
+		
 				<table class="table table-sm table-hover">
 					<thead>
 						<tr class="bg-secondary text-white">
@@ -44,7 +38,7 @@
 							<td><a th:href="@{/doctor/delete(id=${doc.id})}"
 								class="btn btn-outline-danger"> Delete <i
 									class="fa fa-trash-o" aria-hidden="true"></i>
-							</a> | <a th:href="@{/doctor/edit(id=${doc.id})}"
+							</a>  <a th:href="@{/doctor/edit(id=${doc.id})}"
 								class="btn btn-outline-info"> Edit <i
 									class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</a></td>

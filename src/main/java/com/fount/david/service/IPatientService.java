@@ -8,7 +8,7 @@ public interface IPatientService {
 
 	public Long savePatient(Patient patient);
 	
-	public List<Patient> getAllPatient();
+	public List<Patient> getAllPatients();
 	
 	public Patient getOnePatient(Long id);
 	

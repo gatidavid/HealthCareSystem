@@ -4,105 +4,105 @@
 <div th:replace="fragments/common-ui :: header"></div>
 
 <body>
-	<div th:replace="fragments/common-ui :: menu"></div>
-	<div class="container">
+  <div th:replace="fragments/common-ui :: menu"></div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header bg-primary text-center text-white">
+          <h3>Create Appointment</h3>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/appointment/save}" method="POST">
+            <!-- row#1 -->
+            <div class="row">
+              <div class="col-2">
+                <label for="doctor">Doctor</label>
+              </div>
+              <div class="col-4">
+                <select name="doctor.id" id="doctor" class="form-control">
+                	<option value="">-SELECT-</option>
+                	<option th:each="ob:${doctors}" th:value="${ob.key}" th:text="${ob.value}">
+                	</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <span id="dateError"></span>
+              </div>
+            </div>
+            <!-- row#2 -->
+            <div class="row">
+              <div class="col-2">
+                <label for="date">Date</label>
+              </div>
+              <div class="col-4">
+                <input type="text" name="date" id="date" class="form-control datepicker" autocomplete="off" readonly />
+              </div>
+              <div class="col-6">
+                <span id="dateError"></span>
+              </div>
+            </div>
 
-		<div class="card">
+            <!-- row#3 -->
+            <div class="row">
+              <div class="col-2">
+                <label for="noOfSlots">No.Of Slots</label>
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  name="noOfSlots"
+                  id="noOfSlots"
+                  class="form-control"
+                />
+              </div>
+              <div class="col-6">
+                <span id="noOfSlotsError"></span>
+              </div>
+            </div>
 
-			<div class="card-header text-center text-white bg-header-info">
-				<h3>APPOINTMENT REGISTER PAGE</h3>
-			</div>
-			<div class="card-body">
-				<form th:action="@{/appointment/save}" method="post">
-					<!--row 1-->
-					<div class="row">
-						<div class="col-2">
-							<label for="doctor">First name</label>
-						</div>
-						<div class="col-4">
-							<select name="doctor.id" id="doctor" class="form-control">
-								<option value="">--CHOOSE DOCTOR</option>
-								<option th:each="doc:${doctors}" th:value="${doc.key}"
-									th:text="${doc.value}"></option>
-							</select>
+            <!-- row#4 -->
+            <div class="row">
+              <div class="col-2">
+                <label for="consultationFee">Amount</label>
+              </div>
+              <div class="col-4">
+                <input type="text" name="consultationFee" id="consultationFee" class="form-control" />
+              </div>
+              <div class="col-6">
+                <span id="consultationFeeError"></span>
+              </div>
+            </div>
 
-						</div>
-						<div class="col-6">
-							<span id="doctorError"></span>
-						</div>
-					</div>
+            <!-- row#5 -->
+            <div class="row">
+              <div class="col-2">
+                <label for="details">Details</label>
+              </div>
+              <div class="col-4">
+                <textarea
+                  name="details"
+                  id="details"
+                  class="form-control"
+                ></textarea>
+              </div>
+              <div class="col-6">
+                <span id="detailsError"></span>
+              </div>
+            </div>
 
-					<!--row 2-->
-					<div class="row">
-						<div class="col-2">
-							<label for="date">Date</label>
-						</div>
-						<div class="col-4">
-							<input type="text" name="date" id="date"
-								class="form-control datepicker" autocomplete="off" readonly />
-						</div>
-						<div class="col-6">
-							<span id="dateError"></span>
-						</div>
-					</div>
-
-
-					<!--row 2-->
-					<div class="row">
-						<div class="col-2">
-							<label for="noOfSlots">No of Slots</label>
-						</div>
-						<div class="col-4">
-							<input type="number" name="noOfSlots" id="noOfSlots"
-								class="form-control">
-						</div>
-						<div class="col-6">
-							<span id="noOfSlotsError"></span>
-						</div>
-					</div>
-
-					<!--row 3-->
-					<div class="row">
-						<div class="col-2">
-							<label for="details">Details</label>
-						</div>
-						<div class="col-4">
-							<textarea name="details" id="details" class="form-control"></textarea>
-						</div>
-						<div class="col-6">
-							<span id="detailsError"></span>
-						</div>
-					</div>
-
-
-					<!--row 4 -->
-					<div class="row">
-						<div class="col-2">
-							<label for="consultationFee">Consultation Fees</label>
-						</div>
-						<div class="col-4">
-							<input type="number" name="consultationFee" id="consultationFee"
-								class="form-control">
-						</div>
-						<div class="col-6">
-							<span id="consultationFeeError"></span>
-						</div>
-					</div>
-
-					<button type="submit" class="btn btn-success">
-						Add <i class="fa fa-plus-square" aria-hidden="true"></i>
-					</button>
-				</form>
-			</div>
-			<div class="card-footer text-white bg-info">[[${message}]]</div>
-		</div>
-	</div>
-
-	<script>
-		$('.datepicker').datepicker({
-			startDate: new Date()
+            <button type="submit" class="btn btn-success">
+              Create <i class="fa fa-plus-square" aria-hidden="true"></i>
+            </button>
+          </form>
+        </div>
+        <div class="card-footer">
+          <span>[[${message}]]</span>
+        </div>
+      </div>
+    </div>
+    <script>
+    	$('.datepicker').datepicker({
+			startDate : new Date()
 		})
-	</script>
-</body>
-
+    </script>
+  </body>
 </html>

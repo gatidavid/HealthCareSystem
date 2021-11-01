@@ -18,4 +18,6 @@ public interface IAppointmentService {
 	
 	List<Object[]> getAppoinmentsByDoctor(Long docId);
 	
+	List<Object[]> getAppoinmentsByDoctorEmail(String username);
+	
 }

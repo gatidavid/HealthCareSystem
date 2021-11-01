@@ -3,6 +3,8 @@ package com.fount.david.service.impl;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,6 +63,15 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 					Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
 		}
 
+	}
+
+	@Transactional
+	@Override
+	public void updateUserPwd(String pwd, Long userId) {
+	
+		String encPwd = passwordEncoder.encode(pwd);
+		repo.updateUserPwd(encPwd, userId);
+		
 	}
 
 }

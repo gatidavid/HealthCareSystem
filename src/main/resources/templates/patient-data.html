@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="card">
 			<div class="card-header text-white text-center bg-header-info">
-				<h2>PATIENT RECORDS</h2>
+				<h2>PATIENT DATA</h2>
 			</div>
 			<div class="card-body">
 					
@@ -33,7 +33,8 @@
 							<td th:text="${patient.maritalStatus}"></td>
 							<td th:text="${patient.presentAddr}"></td>
 							<td th:text="${patient.note}"></td>
-							<td><a th:href="@{/patient/delete(id=${patient.id})}"
+							<td>
+							<a th:href="@{/patient/delete(id=${patient.id})}"
 								class="btn btn-outline-danger"> Delete <i
 									class="fa fa-trash-o" aria-hidden="true"></i>
 							</a> | <a th:href="@{/patient/edit(id=${patient.id})}"

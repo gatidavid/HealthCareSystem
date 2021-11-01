@@ -69,7 +69,7 @@ public class PatientServiceImpl implements IPatientService {
 	}
 
 	@Override
-	public List<Patient> getAllPatient() {
+	public List<Patient> getAllPatients() {
 
 		return repo.findAll();
 	}

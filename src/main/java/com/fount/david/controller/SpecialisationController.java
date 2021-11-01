@@ -158,7 +158,7 @@ public class SpecialisationController {
 		}else if(id !=0 && service.isSpecCodeExistForExist(code, id)) {//edit check
 			message = code + ", already exist";
 		}
-		return message;
+		return message; //this is not view name(it is message)
 	}
 	
 	
@@ -181,7 +181,9 @@ public class SpecialisationController {
 	ModelAndView mav = new ModelAndView();
 	mav.setView(new SpecialisationExcelView());
 	
+	//read data from DB
 	List<Specialisation> list = service.getAllSpecialisation();
+	//send to Excel impl class 
 	mav.addObject("list", list);
 	
 	return mav;
