@@ -10,7 +10,7 @@ import com.fount.david.model.Appointment;
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
       
-	@Query("SELECT appointment.date, appointment.noOfSlots, appointment.consultationFee FROM Appointment appointment INNER JOIN appointment.doctor as doctor WHERE doctor.id=:docId")
+	@Query("SELECT appoint.date, appoint.noOfSlots, appoint.consultationFee, appoint.id FROM Appointment appoint INNER JOIN appoint.doctor as doctor WHERE doctor.id=:docId")
 	public List<Object[]> getAppoinmentsByDoctor(Long docId);
 	
 	@Query("SELECT appoint.date, appoint.noOfSlots, appoint.consultationFee, appoint.details FROM Appointment appoint INNER JOIN appoint.doctor as doctor WHERE doctor.email=:username")

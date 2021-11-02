@@ -93,4 +93,10 @@ public class PatientServiceImpl implements IPatientService {
 		repo.save(patient);
 	}
 
+	@Override
+	public Patient getOneByEmail(String email) {
+		
+		return repo.findByEmail(email).get();
+	}
+
 }

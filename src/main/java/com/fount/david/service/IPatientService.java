@@ -15,4 +15,6 @@ public interface IPatientService {
 	public void removePatient(Long id);
 	
 	public void updatePatient(Patient patient);
+	
+	Patient getOneByEmail(String email);
 }

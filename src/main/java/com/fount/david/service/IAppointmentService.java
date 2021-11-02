@@ -20,4 +20,6 @@ public interface IAppointmentService {
 	
 	List<Object[]> getAppoinmentsByDoctorEmail(String username);
 	
+	
+
 }

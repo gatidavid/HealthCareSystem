@@ -20,12 +20,13 @@
                         <th>OPERATION</th>
                     </tr>
                 	<tr th:each="ob,i:${list}">
+                	
                     	<td th:text="${i.count}"></td>
                     	<td th:text="${ob[0]}"></td>
                     	<td th:text="${ob[1]}"></td>
                     	<td th:text="${ob[2]}"></td>
                     	<td>
-                    		<a href="#" class="btn btn-success">BOOK REQUEST </a> 
+                    	<a th:href="@{/slots/book(appid=${ob[3]})}" class="btn btn-success">BOOK REQUEST </a>
                     	</td>
                     </tr>
                 </table>
