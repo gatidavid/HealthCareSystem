@@ -1,6 +1,7 @@
 package com.fount.david.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -72,5 +73,35 @@ public class SlotRequestController {
 
 			return "slot-request-mesage";
 		}
+		
+		@GetMapping("/all")
+		public String viewAllReq(Model model) {
+			
+			List<SlotRequest> list = service.getAllSlotRequests();
+			model.addAttribute("list", list);
+			
+			return "slot-request-data";
+		}
+
+		@GetMapping("/accept")
+		public String updateSlotAccept(
+				@RequestParam Long id
+				) 
+		{
+			service.updateSlotRequestStatus(id, "ACCEPTED");
+			return "redirect:all";
+		}
+
+		@GetMapping("/reject")
+		public String updateSlotReject(
+				@RequestParam Long id
+				) 
+		{
+			service.updateSlotRequestStatus(id, "REJECTED");
+			return "redirect:all";
+		}
+
+
+		
 
 }
