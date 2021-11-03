@@ -113,6 +113,7 @@ public class DoctorController {
 		}
 		return "doctor-data";
 	}
+
 	/*
 	 * Delete by id
 	 * */

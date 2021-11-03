@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fount.david.exception.AppointMentNotFoundException;
 import com.fount.david.model.Appointment;
@@ -65,4 +66,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return repo.getAppointmentByDoctorEmail(username);
 	}
 
+	@Transactional
+	public void updateSlotCountForAppoinment(Long id, int count) {
+		repo.updateSlotCountForAppoinment(id, count);
+	}
 }

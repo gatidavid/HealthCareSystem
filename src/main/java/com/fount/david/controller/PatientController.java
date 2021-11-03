@@ -109,8 +109,7 @@ public class PatientController {
 			service.updatePatient(patient);
 			String message = "Patient ('"+patient.getId()+"') Updated";
 			attributes.addAttribute("message", message);
-			
-			
+	
 		} catch (PatientNotFoundException e) {
 			e.printStackTrace();
 			attributes.addAttribute("message", "Unable to Update Patient Record");

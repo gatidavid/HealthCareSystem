@@ -43,9 +43,9 @@ public class MasterAccountSetupRunner implements CommandLineRunner {
 			user.setPassword(pwd);
 			user.setRole(UserRoles.ADMIN.name());
 
-			Long generatedId =userService.saveUser(user);
+			Long userId =userService.saveUser(user);
 			
-			if(generatedId != null) {
+			if(userId !=null) {
 				
 				new Thread(
 						new Runnable() {

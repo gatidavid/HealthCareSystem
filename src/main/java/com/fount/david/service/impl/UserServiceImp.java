@@ -29,8 +29,8 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 	@Override
 	public Long saveUser(User user) {
 
-		String pwd = user.getPassword();// read giving password from user
-		String encPwd = passwordEncoder.encode(pwd);// enode password
+		String pwd = user.getPassword();// get password from user
+		String encPwd = passwordEncoder.encode(pwd);// encode password
 		user.setPassword(encPwd); // set back to object
 
 		return repo.save(user).getId();
@@ -42,6 +42,14 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 		return repo.findByUsername(username);
 
 	}
+	@Transactional
+	@Override
+	public void updateUserPwd(String pwd, Long userId) {
+	
+		String encPwd = passwordEncoder.encode(pwd);
+		repo.updateUserPwd(encPwd, userId);
+		
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) 
@@ -51,7 +59,7 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 
 		if (!opt.isPresent()) {
 
-			throw new UsernameNotFoundException("User " + username + " Does Not Exist");
+			throw new UsernameNotFoundException(username);
 
 		} else {
 
@@ -65,13 +73,6 @@ public class UserServiceImp implements IUserService, UserDetailsService {
 
 	}
 
-	@Transactional
-	@Override
-	public void updateUserPwd(String pwd, Long userId) {
 	
-		String encPwd = passwordEncoder.encode(pwd);
-		repo.updateUserPwd(encPwd, userId);
-		
-	}
 
 }

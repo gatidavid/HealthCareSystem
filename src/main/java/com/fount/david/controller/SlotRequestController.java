@@ -1,5 +1,6 @@
 package com.fount.david.controller;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fount.david.constants.SlotStatus;
 import com.fount.david.model.Appointment;
 import com.fount.david.model.Patient;
 import com.fount.david.model.SlotRequest;
@@ -83,6 +85,17 @@ public class SlotRequestController {
 			return "slot-request-data";
 		}
 
+		@GetMapping("/patient")
+		public String viewMyReq(
+				Principal principal,
+				Model model) 
+		{
+			String email = principal.getName();
+			List<SlotRequest> list = service.viewSlotsByPatientMail(email);
+			model.addAttribute("list", list);
+			return "slot-request-data-patient";
+		}
+		
 		@GetMapping("/accept")
 		public String updateSlotAccept(
 				@RequestParam Long id
@@ -101,6 +114,19 @@ public class SlotRequestController {
 			return "redirect:all";
 		}
 
+		@GetMapping("/cancel")
+		public String cancelSlotReject(
+				@RequestParam Long id
+				) 
+		{
+			SlotRequest slotReq = service.getOneSlotRequest(id);
+			if(slotReq.getStatus().equals(SlotStatus.ACCEPTED.name())) {
+				service.updateSlotRequestStatus(id, SlotStatus.CANCELLED.name());
+				appointmentService.updateSlotCountForAppoinment(
+						slotReq.getAppointment().getId(), 1);
+			}
+			return "redirect:patient";
+		}
 
 		
 

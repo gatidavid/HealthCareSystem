@@ -20,6 +20,8 @@ public interface IAppointmentService {
 	
 	List<Object[]> getAppoinmentsByDoctorEmail(String username);
 	
+	void updateSlotCountForAppoinment(Long id,int count);
+	
 	
 
 }
