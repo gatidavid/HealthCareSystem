@@ -3,6 +3,9 @@ package com.fount.david.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,8 +66,8 @@ public class SpecialisationController {
 	 * 
 	 */
 	
-	@GetMapping("/all")
-	public String getAllSpecData(Model model,
+	//@GetMapping("/all")
+	public String viewAll(Model model,
 								 @RequestParam(value ="message", 
 								 required=false) String message ){
 		
@@ -72,6 +75,23 @@ public class SpecialisationController {
 			List<Specialisation> list= service.getAllSpecialisation();
 			model.addAttribute("list", list);
 			model.addAttribute("message", message);
+		} catch (Exception e) {
+			model.addAttribute("message", "Sorry Unable to Load Specialisation Details");
+			e.printStackTrace();
+		}
+		 return "specialisation-data";
+	}
+	
+	@GetMapping("/all")
+	public String viewAllPageable(Model model,
+						@PageableDefault(page = 0, size=5) Pageable pageable,
+						@RequestParam(value ="message", required=false) String message ){
+		
+		try {
+			
+			Page<Specialisation> page= service.getAllSpecialisation(pageable);
+			model.addAttribute("list", page.getContent());
+			model.addAttribute("page", page);
 		} catch (Exception e) {
 			model.addAttribute("message", "Sorry Unable to Load Specialisation Details");
 			e.printStackTrace();
