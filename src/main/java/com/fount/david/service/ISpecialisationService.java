@@ -25,5 +25,7 @@ public interface ISpecialisationService {
 	public boolean isSpecNameExistForEdit(String specName, Long id);
 
 	Map<Long, String> getSpecIdAndName();
+	
+	long getSpecializationCount();
 
 }

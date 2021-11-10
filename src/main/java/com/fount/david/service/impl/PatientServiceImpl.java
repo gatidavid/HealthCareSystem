@@ -99,4 +99,10 @@ public class PatientServiceImpl implements IPatientService {
 		return repo.findByEmail(email).get();
 	}
 
+	@Override
+	public long getPatientCount() {
+		
+		return repo.count();
+	}
+
 }

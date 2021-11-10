@@ -22,6 +22,7 @@ public interface IAppointmentService {
 	
 	void updateSlotCountForAppoinment(Long id,int count);
 	
+	long getAppointmentCount();
 	
 
 }

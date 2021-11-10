@@ -21,4 +21,5 @@ public interface IDoctorService {
 
 	public List<Doctor> findDoctorBySpecName(Long specId);
 	
+	public long getDoctorCount();
 }

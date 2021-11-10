@@ -25,6 +25,7 @@ import com.fount.david.service.IDocumentService;
 public class DocumentController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DocumentController.class);
+	
 	@Autowired
 	private IDocumentService service;
 
@@ -45,7 +46,7 @@ public class DocumentController {
 			Document doc = new Document();
 			doc.setDocId(docId);
 			doc.setDocName(docOb.getOriginalFilename());
-			
+			doc.setDocData(docOb.getBytes());
 			service.saveDocument(doc);
 		} catch (Exception e) {
 			e.printStackTrace();

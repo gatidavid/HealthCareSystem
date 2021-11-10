@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fount.david.constants.SlotStatus;
 import com.fount.david.model.Appointment;
@@ -19,8 +21,12 @@ import com.fount.david.model.Patient;
 import com.fount.david.model.SlotRequest;
 import com.fount.david.model.User;
 import com.fount.david.service.IAppointmentService;
+import com.fount.david.service.IDoctorService;
 import com.fount.david.service.IPatientService;
 import com.fount.david.service.ISlotRequestService;
+import com.fount.david.service.ISpecialisationService;
+import com.fount.david.util.AdminDashboardUtil;
+import com.fount.david.view.InvoiceSlipPdfView;
 
 @Controller
 @RequestMapping("/slots")
@@ -34,6 +40,18 @@ public class SlotRequestController {
 
 	@Autowired
 	private IPatientService patientService;	
+	
+	@Autowired
+	private ISpecialisationService specialisationService;
+	
+	@Autowired
+	private IDoctorService doctorService;
+	
+	@Autowired
+	private AdminDashboardUtil adminDashboadUtil;
+	
+	@Autowired
+	private ServletContext context;
 	
 	// patient id, appointment id
 		@GetMapping("/book")
@@ -127,7 +145,34 @@ public class SlotRequestController {
 			}
 			return "redirect:patient";
 		}
+		
+		@GetMapping("/dashboard")
+		public String adminDashboard(Model model) 
+		{
+			model.addAttribute("doctors", doctorService.getDoctorCount());
+			model.addAttribute("patients", patientService.getPatientCount());
+			model.addAttribute("appointments", appointmentService.getAppointmentCount());
+			model.addAttribute("specialization", specialisationService.getSpecializationCount());
 
+			String path = context.getRealPath("/"); //root folder
+			
+			List<Object[]> list = service.getSlotsStatusAndCount();
+			adminDashboadUtil.generateBar(path, list);
+			adminDashboadUtil.generatePie(path, list);
+			return "admin-dashboard";
+		}
+
+		@GetMapping("/invoice")
+		public ModelAndView generateInvoice(
+				@RequestParam Long id
+				) 
+		{
+			ModelAndView m = new ModelAndView();
+			m.setView(new InvoiceSlipPdfView());
+			SlotRequest slotRequest=service.getOneSlotRequest(id);
+			m.addObject("slotRequest", slotRequest);
+			return m;
+		}
 		
 
 }

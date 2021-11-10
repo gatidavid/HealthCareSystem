@@ -19,4 +19,7 @@ public interface SlotRequestRepository extends JpaRepository<SlotRequest, Long> 
 	
 	@Query("SELECT slotReq FROM SlotRequest slotReq INNER JOIN slotReq.appointment as appointment INNER JOIN appointment.doctor as doctor WHERE doctor.email = :doctorMail AND slotReq.status=:status")
 	List<SlotRequest> getAllDoctorSlots(String doctorMail,String status);
+	
+	@Query("SELECT status, count(status) FROM SlotRequest GROUP BY status")
+	List<Object[]> getSlotsStatusAndCount();
 }

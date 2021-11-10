@@ -17,4 +17,6 @@ public interface IPatientService {
 	public void updatePatient(Patient patient);
 	
 	Patient getOneByEmail(String email);
+	
+	long getPatientCount();
 }

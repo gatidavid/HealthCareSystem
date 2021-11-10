@@ -21,6 +21,7 @@ import com.fount.david.exception.SpecialisationNotFoundException;
 import com.fount.david.model.Specialisation;
 import com.fount.david.service.ISpecialisationService;
 import com.fount.david.view.SpecialisationExcelView;
+import com.fount.david.view.SpecialisationPdfView;
 
 @Controller
 @RequestMapping("/spec")
@@ -209,6 +210,20 @@ public class SpecialisationController {
 	return mav;
 	}
 	
-	
+	/***
+	 *  export data to PDF file
+	 */
+	@GetMapping("/pdf")
+	public ModelAndView exportToPdf() {
+		ModelAndView m = new ModelAndView();
+		m.setView(new SpecialisationPdfView());
+		
+		//read data from DB
+		List<Specialisation> list = service.getAllSpecialisation();
+		//send to Excel Impl class
+		m.addObject("list", list);
+
+		return m;
+	}
 	
 }

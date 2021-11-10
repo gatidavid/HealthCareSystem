@@ -82,6 +82,12 @@ public class SpecialisationServiceImpl implements ISpecialisationService {
 		return repo.findAll(pageable);
 	}
 
+	@Override
+	public long getSpecializationCount() {
+	
+		return repo.count();
+	}
+
 	
 
 }

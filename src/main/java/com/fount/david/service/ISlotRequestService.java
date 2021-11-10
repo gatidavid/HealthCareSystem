@@ -23,4 +23,6 @@ public interface ISlotRequestService {
 		
 		//DOCTOR can see his slots
 		List<SlotRequest> viewSlotsByDoctorMail(String doctorMail);
+		
+		List<Object[]> getSlotsStatusAndCount();
 }
